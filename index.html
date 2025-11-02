@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flo Lux — Квіти під замовлення</title>
+  <meta name="description" content="Flo Lux — ніжний магазин квітів під замовлення" />
+  <style>
+    :root{
+      --bg:#fff7fb;
+      --card:#ffffff;
+      --accent:#f6c6dd;
+      --accent-2:#ffdfee;
+      --text:#3b2b2b;
+      --muted:#7a5a66;
+      --shadow: 0 8px 20px rgba(95,44,68,0.08);
+      --radius:18px;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#fff);color:var(--text);}
+    .container{max-width:1000px;margin:32px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{display:flex;flex-direction:column}
+    .brand{font-size:26px;font-weight:700;color:#5b2b3b}
+    .tag{font-size:12px;color:var(--muted)}
+    nav{margin-left:auto}
+    nav a{margin-left:12px;text-decoration:none;color:var(--muted);font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:24px;align-items:center}
+    .hero-card{background:var(--card);padding:28px;border-radius:20px;box-shadow:var(--shadow)}
+    .hero h1{margin:0;font-size:34px;color:#6d2d45}
+    .hero p{color:var(--muted);margin-top:8px}
+    .cta{margin-top:18px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer}
+
+    .catalog{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+    .product{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .product img{width:100%;height:180px;object-fit:cover;display:block}
+    .pd{padding:14px}
+    .title{font-weight:700;margin:0 0 6px 0}
+    .desc{font-size:13px;color:var(--muted);margin:0 0 12px 0}
+    .price{font-weight:800;color:#7a2b4a}
+    .actions{margin-top:auto;display:flex;gap:8px}
+    .tiny{padding:8px 10px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+    .order{background:transparent;border:1px solid #ffd6ea;color:#7a2b4a}
+    .buy{background:linear-gradient(90deg,#ffb7d6,#ffebf6);}
+
+    footer{margin-top:40px;padding:18px 0;color:var(--muted);text-align:center}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.35)}
+    .modal .box{background:var(--card);padding:18px;border-radius:14px;width:360px;box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+    .modal h3{margin-top:0}
+    .form-row{display:flex;flex-direction:column;margin-bottom:10px}
+    input,textarea{padding:10px;border-radius:10px;border:1px solid #efe7eb;font-size:14px}
+    .share{display:flex;gap:8px;align-items:center}
+    .contact{display:flex;gap:8px;justify-content:center;margin-top:12px}
+
+    @media (max-width:860px){
+      .hero{grid-template-columns:1fr}
+      .hero-card{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="brand">Flo Lux</div>
+        <div class="tag">Квіти під замовлення — з любов'ю 💐</div>
+      </div>
+      <nav>
+        <a href="#catalog">Каталог</a>
+        <a href="#about">Про нас</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Ніжні букети, які говорять від серця</h1>
+        <p>Індивідуальне оформлення, доставка по місту та оформлення свят. Замовляй букет просто зараз — зробимо красиво ❤</p>
+        <div class="cta">
+          <button class="btn" onclick="openOrder(null)">Замовити букет</button>
+        </div>
+        <div style="margin-top:14px;font-size:13px;color:var(--muted)">Спосіб замовлення: через Telegram / Instagram / форма нижче</div>
+      </div>
+
+      <div>
+        <img src="https://picsum.photos/seed/floLuxHero/520/420" alt="Flo Lux" style="width:100%;border-radius:16px;box-shadow:var(--shadow)">
+      </div>
+    </section>
+
+    <h2 id="catalog" style="margin-top:26px">Каталог</h2>
+    <div class="catalog" id="products">
+      <!-- товари вставляються скриптом -->
+    </div>
+
+    <section id="about" style="margin-top:26px">
+      <div class="hero-card">
+        <h3>Про Flo Lux</h3>
+        <p class="desc">Flo Lux — маленька студія флористики. Ми створюємо ніжні композиції з увагою до деталей: від святкового букету до квітів для інтер'єру. Працюємо на замовлення — розкажи нам свою ідею :)</p>
+      </div>
+    </section>
+
+    <section id="contacts" style="margin-top:18px">
+      <div class="hero-card">
+        <h3>Контакти</h3>
+        <p class="desc">Telegram: <a href="#" id="tgLink">@твій_телеграм</a> • Instagram: <a href="#" id="igLink">@твій_інстаграм</a></p>
+        <div class="contact">
+          <button class="tiny order" onclick="openOrder(null)">Замовити через форму</button>
+          <button class="tiny" onclick="copyContacts()">Копіювати контакти</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>© Flo Lux — Квіти під замовлення • Зроблено з ❤️</footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="box">
+      <h3>Форма замовлення</h3>
+      <div class="form-row">
+        <label>Ім'я</label>
+        <input id="name" placeholder="Ваше ім'я">
+      </div>
+      <div class="form-row">
+        <label>Телефон або Telegram</label>
+        <input id="phone" placeholder="+380... або посилання на Telegram">
+      </div>
+      <div class="form-row">
+        <label>Букет (назва або опис)</label>
+        <input id="item" placeholder="Наприклад: 'Ніжний рожевий букет, 15 троянд'">
+      </div>
+      <div class="form-row">
+        <label>Додаткова інформація</label>
+        <textarea id="notes" rows="3" placeholder="Колір, дата доставки, адреса..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="tiny" onclick="closeModal()">Скасувати</button>
+        <button class="tiny buy" onclick="sendOrder()">Надіслати замовлення</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const productsData = [
+      {id:1,name:"Букет 'Ніжність'",desc:"Рожеві півонії + троянди, 12 шт.",price:"1200 грн",img:'https://picsum.photos/seed/rose1/800/600'},
+      {id:2,name:"Міні-букет 'Легкість'",desc:"Короткий букет з евкаліптом і ромашками",price:"450 грн",img:'https://picsum.photos/seed/rose2/800/600'},
+      {id:3,name:"Преміум-композиція 'Свято'",desc:"Великі троянди і декор, упаковка преміум",price:"2200 грн",img:'https://picsum.photos/seed/rose3/800/600'},
+      {id:4,name:"Скіпетр ніжності",desc:"Асорті квітів у пастельних тонах",price:"980 грн",img:'https://picsum.photos/seed/rose4/800/600'}
+    ];
+
+    const productsEl = document.getElementById('products');
+    function renderProducts(){
+      productsEl.innerHTML = '';
+      productsData.forEach(p=>{
+        const el = document.createElement('div'); el.className='product';
+        el.innerHTML = `\n          <img src="${p.img}" alt="${p.name}">\n          <div class="pd">\n            <h4 class="title">${p.name}</h4>\n            <p class="desc">${p.desc}</p>\n            <div style=\"display:flex;align-items:center;justify-content:space-between\">\n              <div class=\"price\">${p.price}</div>\n            </div>\n            <div class='actions' style=\"margin-top:12px\">\n              <button class=\"tiny order\" onclick=\"openOrder(${p.id})\">Замовити</button>\n              <button class=\"tiny\" onclick=\"copyLink(${p.id})\">Поділитися</button>\n            </div>\n          </div>\n        `;
+        productsEl.appendChild(el);
+      })
+    }
+    renderProducts();
+
+    const modal = document.getElementById('modal');
+    function openOrder(productId){
+      modal.style.display='flex';
+      const item = productsData.find(x=>x.id===productId);
+      if(item){ document.getElementById('item').value = item.name + ' — ' + item.price; }
+      else { document.getElementById('item').value = '' }
+    }
+    function closeModal(){ modal.style.display='none' }
+
+    function sendOrder(){
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const item = document.getElementById('item').value.trim();
+      const notes = document.getElementById('notes').value.trim();
+      if(!phone || !item){ alert('Заповніть, будь ласка, контакт та назву букета.'); return }
+
+      const text = `Замовлення%0AІм'я:%20${encodeURIComponent(name)}%0AКонтакт:%20${encodeURIComponent(phone)}%0AБукет:%20${encodeURIComponent(item)}%0AДеталі:%20${encodeURIComponent(notes)}`;
+
+      // Спроба відкрити Telegram (якщо доступно) інакше — пошта
+      const tgUrl = `https://t.me/share/url?url=&text=${text}`;
+      window.open(tgUrl,'_blank');
+      closeModal();
+      alert('Форма відправлена — також можна перевірити чат у Telegram або скопіювати замовлення вручну.');
+    }
+
+    function copyLink(id){
+      const p = productsData.find(x=>x.id===id);
+      const text = `${p.name} — ${p.price}\n${p.desc}`;
+      navigator.clipboard.writeText(text).then(()=>{ alert('Інформація скопійована в буфер обміну!'); });
+    }
+
+    function copyContacts(){
+      const txt = 'Flo Lux — Квіти під замовлення\nTelegram: @твій_телеграм\nInstagram: @твій_інстаграм';
+      navigator.clipboard.writeText(txt).then(()=>alert('Контакти скопійовано'))
+    }
+
+    // Налаштування посилань (замінити на свої посилання)
+    document.getElementById('tgLink').href = 'https://t.me/your_username';
+    document.getElementById('igLink').href = 'https://instagram.com/your_username';
+
+    // Закрити модальне при кліку поза боксом
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal() })
+  </script>
+
+  <!--
+    README (як користуватися шаблоном)
+
+    1) Копіювання файлу
+       - Скопіюй увесь цей файл і збережи як `index.html` на своєму комп'ютері.
+
+    2) Редагування
+       - Щоб змінити товари: знайди масив productsData у <script> та заміни/додай об'єкти (name, desc, price, img).
+       - Замінити посилання на Telegram/Instagram: знайди рядки з 'your_username' і заміни.
+       - Можеш змінити кольори в :root (CSS) під свій стиль.
+
+    3) Безкоштовна публікація на GitHub Pages
+       a) Зареєструйся на https://github.com якщо ще не маєш акаунта.
+       b) Створи новий репозиторій з ім'ям, наприклад, `FloLux` (можна публічний).
+       c) У веб-інтерфейсі GitHub → Add file → Upload files → завантаж `index.html` → Commit.
+       d) У репозиторії: Settings → Pages → Source: вибери branch `main` і root `/` → Save.
+       e) Через кілька хвилин сайт буде доступний за адресою `https://<твій-нікнейм>.github.io/FloLux`.
+
+    4) Варіанти замовлення
+       - За замовчуванням кнопка відкриває Telegram share. Якщо хочеш, щоб замовлення приходили на email, можна змінити sendOrder() щоб відкривати mailto: посилання з prefilled body.
+
+    5) Допомогти можу я
+       - Якщо хочеш, я можу: замінити тексти, додати твої фото товарів, підправити кольори або сам завантажу файл в твій GitHub (якщо дасте тимчасовий доступ).
+  -->
+</body>
+</html>
